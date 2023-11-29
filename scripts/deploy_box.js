@@ -1,15 +1,12 @@
-// scripts/deploy_upgradeable_box.js
-const { ethers, upgrades } = require('hardhat');
+const { ethers, upgrades } = require("hardhat");
 
-async function main () {
-  const Box = await ethers.getContractFactory('Box');
-  console.log('Deploying Box...');
-  const box = await upgrades.deployProxy(Box, [42], { initializer: 'store' });
-  let r = await box.waitForDeployment();
-  console.log("r: ", r);
-  return;
-  await box.deployed();
-  console.log('Box deployed to:', box.address);
+async function main() {
+  // Deploying
+  const Box = await ethers.getContractFactory("Box");
+  const instance = await upgrades.deployProxy(Box, [42], { initializer: 'store' });
+  await instance.waitForDeployment();
+  console.log('Box deployed to:',instance.target);
+
 }
 
 main();
